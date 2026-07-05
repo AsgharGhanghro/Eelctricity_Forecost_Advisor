@@ -1,4 +1,4 @@
-# ⚡ Electricity Analyzer & Advisor
+# ⚡ Electricity Forecost & Advisor
 
 An AI-powered web application that analyzes electricity consumption patterns and provides smart energy-saving advice using a GRU (Gated Recurrent Unit) deep learning model.
 
