@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.env
+.venv
+
+# Model Artifacts (large binary files - DO NOT PUSH)
+server/artifacts/
+*.pkl
+*.h5
+
+# Training history & notebooks
+server/artifacts/model_artifacts/training_history.csv
+server/artifacts/model_artifacts/Ex.ipynb
+*.ipynb
+
+# Logs
+server/logs/
+logs/
+*.log
+
+# Data files (DO NOT PUSH)
+data/
+*.csv
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables (NEVER PUSH)
+.env
+.env.local
+.env.production
+*.env
+
+# Vercel
+.vercel
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Jupyter
+.ipynb_checkpoints/

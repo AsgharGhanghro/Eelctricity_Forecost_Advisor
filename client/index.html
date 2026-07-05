@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Usage Advisor - AI-Powered Energy Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <h1>Electricity Advisor</h1>
+                </div>
+                <div class="header-info">
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span id="currentTime"></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-server"></i>
+                        <span id="apiStatus">Connecting...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container main-container">
+        <!-- Dashboard Stats -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="fas fa-plug"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Current Usage</h3>
+                    <p class="stat-value" id="currentUsage">-- kW</p>
+                    <span class="stat-label">Real-time</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Today's Total</h3>
+                    <p class="stat-value" id="todayTotal">-- kWh</p>
+                    <span class="stat-label">Consumption</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Peak Hour</h3>
+                    <p class="stat-value" id="peakHour">--:--</p>
+                    <span class="stat-label">Expected</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Est. Cost</h3>
+                    <p class="stat-value" id="estimatedCost">₹ --</p>
+                    <span class="stat-label">Today</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('predictions')">
+                <i class="fas fa-crystal-ball"></i> Predictions
+            </button>
+            <button class="tab-button" onclick="switchTab('explanations')">
+                <i class="fas fa-brain"></i> AI Explanations
+            </button>
+            <button class="tab-button" onclick="switchTab('advice')">
+                <i class="fas fa-lightbulb"></i> Energy Advice
+            </button>
+            <button class="tab-button" onclick="switchTab('analytics')">
+                <i class="fas fa-chart-bar"></i> Analytics
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Predictions Tab -->
+            <div id="predictions" class="tab-panel active">
+                <div class="panel-header">
+                    <h2><i class="fas fa-crystal-ball"></i> Consumption Predictions</h2>
+                    <div class="panel-controls">
+                        <button class="btn btn-primary" onclick="fetchPredictions(24)">
+                            <i class="fas fa-sync"></i> 24 Hours
+                        </button>
+                        <button class="btn btn-secondary" onclick="fetchPredictions(48)">
+                            48 Hours
+                        </button>
+                        <button class="btn btn-secondary" onclick="fetchPredictions(168)">
+                            7 Days
+                        </button>
+                    </div>
+                </div>
+
+                <div class="prediction-stats">
+                    <div class="mini-stat">
+                        <span class="mini-label">Peak Prediction</span>
+                        <span class="mini-value" id="peakPrediction">-- kW</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">Average</span>
+                        <span class="mini-value" id="avgPrediction">-- kW</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">Est. Weekly Cost</span>
+                        <span class="mini-value" id="totalCost">₹ --</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="predictionChart"></div>
+                </div>
+
+                <div class="components-breakdown">
+                    <h3>Component Breakdown</h3>
+                    <div id="componentsChart"></div>
+                </div>
+            </div>
+
+            <!-- Explanations Tab -->
+            <div id="explanations" class="tab-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-brain"></i> AI Model Explanations</h2>
+                    <div class="panel-controls">
+                        <button class="btn btn-primary" onclick="fetchExplanations()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="explanation-content">
+                    <div class="chart-container">
+                        <div id="xaiChart"></div>
+                    </div>
+
+                    <div class="explanations-list" id="explanationsList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Loading explanations...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advice Tab -->
+            <div id="advice" class="tab-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-lightbulb"></i> Energy Saving Advice</h2>
+                    <div class="panel-controls">
+                        <button class="btn btn-primary" onclick="fetch7DayAdvice()">
+                            <i class="fas fa-calendar-week"></i> 7-Day Plan
+                        </button>
+                        <button class="btn btn-secondary" onclick="fetchEnergyAdvice()">
+                            <i class="fas fa-sync"></i> General Advice
+                        </button>
+                    </div>
+                </div>
+
+                <div class="advice-container">
+                    <div class="savings-summary" id="savingsSummary">
+                        <div class="savings-card">
+                            <h3>Potential Savings</h3>
+                            <div class="savings-amount" id="savingsAmount">₹ --</div>
+                            <p>Per Week</p>
+                        </div>
+                    </div>
+
+                    <div class="advice-list" id="adviceList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Click "7-Day Plan" to get personalized advice...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-chart-bar"></i> Analytics & Insights</h2>
+                    <div class="panel-controls">
+                        <button class="btn btn-primary" onclick="fetchAnalytics()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Consumption Trends</h3>
+                        <div id="trendsChart"></div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Peak Hours Analysis</h3>
+                        <div id="peakHoursChart"></div>
+                    </div>
+
+                    <div class="analytics-card full-width">
+                        <h3>Model Training History</h3>
+                        <div id="trainingChart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Electricity Advisor | AI-Powered Energy Management</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api-client.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize dashboard on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+        });
+    </script>
+</body>
+</html>

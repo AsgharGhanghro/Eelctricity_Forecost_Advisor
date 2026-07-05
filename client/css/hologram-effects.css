@@ -1,0 +1,605 @@
+/* 
+═══════════════════════════════════════════════════════════════
+HOLOGRAM EFFECT STYLES - Futuristic Holographic UI
+═══════════════════════════════════════════════════════════════
+*/
+
+:root {
+    --holo-cyan: #00ffff;
+    --holo-blue: #0080ff;
+    --holo-purple: #8000ff;
+    --holo-pink: #ff00ff;
+}
+
+/* Base Hologram Effect */
+.hologram {
+    position: relative;
+    background: rgba(0, 255, 255, 0.05);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    animation: hologramFlicker 0.15s infinite alternate;
+}
+
+.hologram::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 255, 255, 0.1) 0%,
+        transparent 50%,
+        rgba(0, 255, 255, 0.1) 100%
+    );
+    animation: hologramScan 2s linear infinite;
+    pointer-events: none;
+}
+
+/* Hologram Card */
+.hologram-card {
+    position: relative;
+    background: rgba(0, 20, 40, 0.8);
+    border: 2px solid rgba(0, 255, 255, 0.4);
+    border-radius: 15px;
+    padding: 25px;
+    overflow: hidden;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.3),
+        inset 0 0 30px rgba(0, 255, 255, 0.05);
+}
+
+.hologram-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(0, 255, 255, 0.3),
+        transparent
+    );
+    z-index: -1;
+    animation: hologramBorderRotate 3s linear infinite;
+}
+
+.hologram-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--holo-cyan),
+        transparent
+    );
+    animation: hologramScanline 3s linear infinite;
+    box-shadow: 0 0 10px var(--holo-cyan);
+}
+
+/* Hologram Text */
+.hologram-text {
+    color: var(--holo-cyan);
+    text-shadow: 
+        0 0 10px var(--holo-cyan),
+        0 0 20px var(--holo-cyan),
+        0 0 30px var(--holo-cyan);
+    animation: hologramTextGlitch 0.3s infinite;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.hologram-text-large {
+    font-size: 2em;
+    font-weight: bold;
+    background: linear-gradient(
+        45deg,
+        var(--holo-cyan),
+        var(--holo-blue),
+        var(--holo-purple)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px var(--holo-cyan));
+}
+
+/* Hologram Button */
+.hologram-button {
+    position: relative;
+    background: transparent;
+    border: 2px solid var(--holo-cyan);
+    color: var(--holo-cyan);
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+.hologram-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(0, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.hologram-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.hologram-button:hover {
+    color: #000;
+    background: var(--holo-cyan);
+    box-shadow: 
+        0 0 40px var(--holo-cyan),
+        inset 0 0 40px rgba(0, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Hologram Panel */
+.hologram-panel {
+    position: relative;
+    background: rgba(0, 20, 40, 0.9);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.hologram-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 255, 0.2),
+        transparent
+    );
+    animation: hologramPanelSweep 3s linear infinite;
+}
+
+/* Hologram Grid Background */
+.hologram-grid {
+    position: relative;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: hologramGridMove 20s linear infinite;
+}
+
+.hologram-grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(0, 20, 40, 0.8) 100%
+    );
+    pointer-events: none;
+}
+
+/* Hologram Data Display */
+.hologram-data {
+    font-family: 'Courier New', monospace;
+    color: var(--holo-cyan);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 15px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram-data::before {
+    content: '>';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--holo-cyan);
+    animation: hologramCursorBlink 1s infinite;
+}
+
+/* Hologram Progress */
+.hologram-progress {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.hologram-progress-bar {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--holo-cyan),
+        var(--holo-blue),
+        var(--holo-purple)
+    );
+    background-size: 200% 100%;
+    box-shadow: 
+        0 0 20px var(--holo-cyan),
+        inset 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: hologramProgressGlow 2s linear infinite;
+    position: relative;
+}
+
+.hologram-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.8);
+    animation: hologramProgressScan 1s linear infinite;
+}
+
+/* Hologram Badge */
+.hologram-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border: 1px solid var(--holo-cyan);
+    border-radius: 20px;
+    color: var(--holo-cyan);
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 
+        0 0 15px rgba(0, 255, 255, 0.5),
+        inset 0 0 10px rgba(0, 255, 255, 0.2);
+    animation: hologramBadgePulse 2s infinite;
+}
+
+/* Hologram Scanlines */
+.hologram-scanlines {
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram-scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Hologram Corner Markers */
+.hologram-corners {
+    position: relative;
+}
+
+.hologram-corners::before,
+.hologram-corners::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--holo-cyan);
+    box-shadow: 0 0 10px var(--holo-cyan);
+}
+
+.hologram-corners::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.hologram-corners::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+/* Hologram HUD Element */
+.hologram-hud {
+    position: relative;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--holo-cyan);
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    color: var(--holo-cyan);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 255, 0.5),
+        inset 0 0 30px rgba(0, 255, 255, 0.1);
+}
+
+.hologram-hud::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        var(--holo-cyan) 50%,
+        transparent 70%
+    );
+    animation: hologramHudScan 3s linear infinite;
+    z-index: -1;
+}
+
+/* Hologram Glitch Effect */
+.hologram-glitch {
+    position: relative;
+    animation: hologramGlitch 0.3s infinite;
+}
+
+.hologram-glitch::before,
+.hologram-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hologram-glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--holo-cyan);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: hologramGlitchAnim 3s infinite linear alternate-reverse;
+}
+
+.hologram-glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--holo-purple);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: hologramGlitchAnim 2s infinite linear alternate-reverse;
+}
+
+/* Hologram Particle Effect */
+.hologram-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hologram-particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--holo-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--holo-cyan);
+    animation: hologramParticleFloat 3s infinite;
+}
+
+/* Hologram Loading */
+.hologram-loading {
+    width: 60px;
+    height: 60px;
+    border: 3px solid transparent;
+    border-top-color: var(--holo-cyan);
+    border-right-color: var(--holo-blue);
+    border-radius: 50%;
+    animation: hologramSpin 1s linear infinite;
+    box-shadow: 0 0 20px var(--holo-cyan);
+}
+
+.hologram-loading::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 3px solid transparent;
+    border-top-color: var(--holo-purple);
+    border-radius: 50%;
+    animation: hologramSpin 0.6s linear infinite reverse;
+}
+
+/* ==================== ANIMATIONS ==================== */
+
+@keyframes hologramFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.98; }
+}
+
+@keyframes hologramScan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+@keyframes hologramScanline {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+@keyframes hologramBorderRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes hologramTextGlitch {
+    0%, 90%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes hologramPanelSweep {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes hologramGridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 20px; }
+}
+
+@keyframes hologramCursorBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+@keyframes hologramProgressGlow {
+    0%, 100% {
+        background-position: 0% 50%;
+        box-shadow: 0 0 20px var(--holo-cyan);
+    }
+    50% {
+        background-position: 100% 50%;
+        box-shadow: 0 0 40px var(--holo-blue);
+    }
+}
+
+@keyframes hologramProgressScan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes hologramBadgePulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 15px rgba(0, 255, 255, 0.5),
+            inset 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(0, 255, 255, 0.8),
+            inset 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+}
+
+@keyframes hologramHudScan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes hologramGlitch {
+    0%, 90%, 100% { transform: skew(0deg); }
+    20% { transform: skew(-2deg); }
+    40% { transform: skew(2deg); }
+}
+
+@keyframes hologramGlitchAnim {
+    0% { clip: rect(42px, 9999px, 44px, 0); }
+    5% { clip: rect(12px, 9999px, 59px, 0); }
+    10% { clip: rect(48px, 9999px, 29px, 0); }
+    15% { clip: rect(42px, 9999px, 73px, 0); }
+    20% { clip: rect(63px, 9999px, 27px, 0); }
+    25% { clip: rect(34px, 9999px, 55px, 0); }
+    30% { clip: rect(86px, 9999px, 73px, 0); }
+    35% { clip: rect(20px, 9999px, 20px, 0); }
+    40% { clip: rect(26px, 9999px, 60px, 0); }
+    45% { clip: rect(25px, 9999px, 66px, 0); }
+    50% { clip: rect(57px, 9999px, 98px, 0); }
+    55% { clip: rect(5px, 9999px, 46px, 0); }
+    60% { clip: rect(82px, 9999px, 31px, 0); }
+    65% { clip: rect(54px, 9999px, 27px, 0); }
+    70% { clip: rect(28px, 9999px, 99px, 0); }
+    75% { clip: rect(45px, 9999px, 69px, 0); }
+    80% { clip: rect(23px, 9999px, 85px, 0); }
+    85% { clip: rect(54px, 9999px, 84px, 0); }
+    90% { clip: rect(45px, 9999px, 47px, 0); }
+    95% { clip: rect(37px, 9999px, 20px, 0); }
+    100% { clip: rect(4px, 9999px, 91px, 0); }
+}
+
+@keyframes hologramParticleFloat {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        transform: translateY(-100px) translateX(20px);
+        opacity: 0;
+    }
+}
+
+@keyframes hologramSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hologram Hover Effects */
+.hologram-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 0 40px rgba(0, 255, 255, 0.6),
+        inset 0 0 40px rgba(0, 255, 255, 0.2);
+}
+
+/* Hologram Matrix Rain */
+.hologram-matrix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hologram-matrix-char {
+    position: absolute;
+    color: var(--holo-cyan);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    animation: hologramMatrixFall linear infinite;
+    text-shadow: 0 0 10px var(--holo-cyan);
+}
+
+@keyframes hologramMatrixFall {
+    0% { top: -100px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
